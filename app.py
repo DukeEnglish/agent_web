@@ -25,15 +25,14 @@ def chat():
     user_input = request.json.get('message', [])
     llm_service_name = request.json.get(
         'llmservice', DEFAULT_LLM_SERVICE_NAME)
-    api_key = request.json.get('apikey', DEFAULT_API_KEY)
+    # api_key = request.json.get('apikey', DEFAULT_API_KEY)
 
-    headers = {'Authorization': f'Bearer {api_key}'}
+    # headers = {'Authorization': f'Bearer {api_key}'}
     llm_client = ServiceFactory().get_service(llm_service_name)
     print("input is ", user_input, request.method)
 
-
     if request.method == 'POST':
-        
+
         response = llm_client.llm_stream(user_input=user_input)
 
         messages = []

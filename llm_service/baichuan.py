@@ -6,7 +6,6 @@ Date: 2024-01-06 12:55:46
 LastEditors: Duke 叶兀
 LastEditTime: 2024-01-18 02:13:18
 '''
-import logging
 from config import BAICHUAN_API_KEY
 from llm_service.base_service import LLMBaseService
 

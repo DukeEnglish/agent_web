@@ -10,6 +10,7 @@ import json
 import requests
 from config import BAIDU_API_KEY, BAIDU_SECRET_API_KEY
 
+
 class LLMBaseService():
     """
     LLM模型基础服务
@@ -20,7 +21,7 @@ class LLMBaseService():
 
     @classmethod
     def get_instance(cls, api_key=None, sec_key=None):
-        print("123",api_key, sec_key)
+        print("123", api_key, sec_key)
         if cls._instance is None and api_key is None:
             cls._instance = cls()
         elif cls._instance is None and (api_key is not None and sec_key is None):
@@ -31,8 +32,6 @@ class LLMBaseService():
 
     def __init__(self):
         pass
-
-
 
 
 class BAIDULLMService(LLMBaseService):

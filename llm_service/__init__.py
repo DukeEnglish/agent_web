@@ -1,5 +1,5 @@
 '''
-Descripttion: 
+Descripttion:
 Author: Duke 叶兀
 E-mail: ljyduke@gmail.com
 Date: 2024-01-06 08:55:19
@@ -41,4 +41,5 @@ if __name__ == '__main__':
             #     print(i)
             #     print()
         except Exception as e:
+            print(e)
             pass

@@ -24,9 +24,11 @@ class ERNIEService(BAIDULLMService):
     def __init__(self, api_key=BAIDU_API_KEY, sec_key=BAIDU_SECRET_API_KEY):
         super().__init__()
         if api_key and sec_key:
-            self.url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/eb-instant?access_token=" + self._get_access_token(BAIDU_API_KEY, BAIDU_SECRET_API_KEY)
+            self.url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/eb-instant?access_token=" + \
+                self._get_access_token(BAIDU_API_KEY, BAIDU_SECRET_API_KEY)
         else:
-            self.url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/eb-instant?access_token=" + self._get_access_token()
+            self.url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/eb-instant?access_token=" + \
+                self._get_access_token()
         self.headers = {
             'Content-Type': 'application/json'
         }
