@@ -1,0 +1,185 @@
+/* static/css/styles.css */
+/* 全局样式 */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+}
+
+/* 居中容器 */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 垂直居上 */
+    min-height: 100vh; /* 至少为视口高度 */
+    padding: 20px;
+}
+
+/* 对话框和选项栏容器 */
+.chat-container {
+    display: flex;
+    flex-direction: row;
+    max-width: 1200px; /* 最大宽度 */
+    width: 100%; /* 占据整个父容器的宽度 */
+}
+
+/* 对话框和选项栏 */
+.chat-area, .options-sidebar {
+    flex: none; /* 不受flex-grow影响 */
+    margin: 0 10px; /* 左右留一些间距 */
+}
+
+.chat-area {
+    width: 80%; /* 对话框占据80% */
+}
+
+.options-sidebar {
+    width: 90%; /* 配置栏占据20% */
+    /* width: 250px; 边栏固定宽度 */
+    overflow-y: auto; /* 边栏内容超出时显示滚动条 */
+    height: 400px; /* 设置为100px高度 */
+}
+
+.second-options-sidebar {
+    height: 250px; /* 设置为100px高度 */
+}
+
+/* 聊天区域样式 */
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 聊天区域占满视口高度 */
+}
+
+
+/* 输入区域样式 */
+.chat-input-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* 输入框和按钮样式 */
+input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 5px;
+    border: 1px solid #e0e0e6;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #0056b3;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #003d82;
+}
+
+/* 选项栏样式 */
+.options-sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 15px; /* 选项之间的间隔 */
+}
+
+/* 消息样式 */
+.user-message, .bot-message {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background-color: #e6f5c9;
+    float: right;
+    margin-left: 10px;
+}
+
+.bot-message {
+    background-color: #f0f0f0;
+    float: left;
+    margin-right: 10px;
+}
+
+/* 聊天气泡样式 */
+.chat-bubble {
+    padding: 10px 18px;
+    margin-bottom: 8px;
+    border-radius: 20px;
+    max-width: 70%;
+    display: inline-block; /* 保持内联块显示 */
+    word-wrap: break-word;
+    clear: both; /* 清除浮动 */
+}
+
+
+/* 用户消息气泡 */
+.user-bubble {
+    background-color: #e6f5c9;
+    margin-left: auto; /* 右对齐 */
+    color: #264409;
+}
+
+/* 机器人消息气泡 */
+.bot-bubble {
+    background-color: #f0f0f0;
+    margin-right: auto; /* 左对齐 */
+    color: #4a4a4a;
+}
+
+/* 聊天历史样式 */
+.chat-history {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 默认向左对齐 */
+    overflow-y: auto; /* 显示垂直滚动条 */
+    padding: 20px; /* 为滚动内容留出一些空间 */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1; /* 聊天历史占据剩余空间 */
+}
+
+/* 新写的样式 */
+.chat-history::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* 清除浮动 */
+.clear-floats {
+    clear: both;
+}
+
+.options-sidebar {
+    /* 现有样式 */
+    /* ... */
+    margin-bottom: 10px; /* 添加底部外边距，与第二个设置部分保持间距 */
+}
+
+/* 如果需要对第二个设置部分添加特定样式 */
+.options-sidebar + .options-sidebar {
+    border-top: 1px solid #ccc; /* 与第一个设置部分分隔 */
+    padding-top: 10px; /* 增加内边距 */
+}
+

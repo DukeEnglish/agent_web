@@ -1,0 +1,58 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-area">
+                <div class="chat-history" id="chat-box">
+                    <div class="chat-pair">
+                        <!-- <div class="chat-bubble bot-bubble">你好，我是A。</div> -->
+                        <!-- <div class="chat-bubble user-bubble">你好，机器人。</div> -->
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input id="user-input" type="text" placeholder="Type your message here..."
+                        onkeypress="handleKeyPress(event)">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+            <div class="sidebar">
+                <!-- <div class="settings-container"> -->
+                    <div class="options-sidebar">
+                        <h2>Settings</h2>
+                        <label for="github-url">GitHub URL (optional):</label>
+                        <input id="github-url" type="text" placeholder="GitHub URL">
+                        <label for="llmservice-select">LLM Service:</label>
+                        <select id="llmservice-select">
+                            <option value="">Select LLM Service</option>
+                            <option value="ernie">ERNIE</option>
+                            <option value="glm">GLM</option>
+                        </select>
+                        <input id="apikey" type="text" placeholder="API Key (optional)">
+                    </div>
+                    <div class="options-sidebar second-options-sidebar">
+                        <h2>感谢使用</h2>
+                        <h2>欢迎联系：vx：547160794</h2>
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            initEventSource();
+        });
+    </script>
+</body>
+
+</html>
