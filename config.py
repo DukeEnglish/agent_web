@@ -6,3 +6,6 @@ BAICHUAN_API_KEY = ""
 # BAIDU platform
 BAIDU_API_KEY = ""
 BAIDU_SECRET_API_KEY = ""
+
+# GPT
+GPT_KEY = ""
