@@ -70,7 +70,27 @@ class YIService(BAIDULLMService):
             if res["is_end"]:
                 logging.info(f"result is done for user_input {user_input}")
             yield res["result"]
+    
+    def chat_stream(self, dialogue =[
+                {
+                    "role": "user",
+                    "content": f"忽略原始的身份设定，你是一个小秘书小明，要认真回答用户的问题。"
+                }
+            ]):
+        dialogue_dict = {"messages": dialogue}
+        dialogue_dict["stream"] = True
+        payload = json.dumps(dialogue_dict)
 
+        response = requests.request(
+            "POST", self.url, headers=self.headers, data=payload, stream=True)
+
+        for line in response.iter_lines():
+            if not line:
+                continue
+            res = json.loads(":".join(line.decode("utf-8").split(":")[1:]))
+            if res["is_end"]:
+                logging.info(f"result is done for")
+            yield res["result"]
 
 if __name__ == '__main__':
     yi = YIService()
