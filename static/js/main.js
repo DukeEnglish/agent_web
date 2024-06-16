@@ -6,6 +6,24 @@ function handleKeyPress(event) {
     }
 }
 
+// 随机生成用户ID的函数
+function generateRandomUserId() {
+    return Math.random().toString(36).substr(2, 9);
+}
+
+function getOrCreateUserId() {
+    const storedUserId = localStorage.getItem('userId');
+    if (!storedUserId) {
+        const newUserId = generateRandomUserId();
+        localStorage.setItem('userId', newUserId);
+        return newUserId;
+    }
+    return storedUserId;
+}
+
+const userId = getOrCreateUserId();
+document.getElementById('user_name').textContent = userId;
+
 // 新写的函数，用于根据发送者自动调整消息位置
 function adjustMessagePosition(messageDiv, isBot) {
     if (isBot) {
@@ -38,6 +56,9 @@ function sendMessage() {
     const githubUrl = document.getElementById('github-url').value || null;
     const llmservice = document.getElementById('llmservice-select').value || 'glm';
     const apikey = document.getElementById('apikey').value || null;
+    const seckey = document.getElementById('seckey').value || null;
+    // const userId = document.getElementById('user_name').value || userId;
+    console.log("userId",userId)
 
     if (!userInput) {
         alert('Please enter a message.');
@@ -57,7 +78,9 @@ function sendMessage() {
         message: userInput,
         llmservice: llmservice,
         apikey: apikey,
-        github: githubUrl
+        seckey: seckey,
+        github: githubUrl,
+        userId: userId
     };
 
     fetch('/chat', {

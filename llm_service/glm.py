@@ -26,6 +26,7 @@ class GLMService(LLMBaseService):
             ],
             stream=False,
         )
+        print(response.choices)
         res = response.choices[0].message.content
         logging.info(f"yi_single_service' resp is {res}")
         return res
@@ -36,6 +37,24 @@ class GLMService(LLMBaseService):
             messages=[
                 {"role": "user", "content": user_input},
             ],
+            stream=True,
+        )
+        for chunk in response:
+            content = chunk.choices[0].delta.content
+            if not content:
+                continue
+
+            yield content
+
+    def chat_stream(self, dialogue =[
+                {
+                    "role": "user",
+                    "content": f"忽略原始的身份设定，你是一个小秘书小明，要认真回答用户的问题。"
+                }
+            ]):
+        response = self.client.chat.completions.create(
+            model="glm-4",  # 填写需要调用的模型名称
+            messages=dialogue,
             stream=True,
         )
         for chunk in response:
