@@ -59,7 +59,8 @@ def update_history(user_id, bot_response):
             "content": f"{bot_response}"
         }
     ]
-    HISTORY[user_id][:-1] += dialogue
+    HISTORY[user_id] = HISTORY[user_id][:-1] + dialogue
+    print("his up", HISTORY)
 
 
 @app.route('/chat', methods=['POST', 'GET'])
