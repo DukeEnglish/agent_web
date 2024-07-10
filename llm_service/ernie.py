@@ -68,6 +68,7 @@ class ERNIEService(BAIDULLMService):
             if not line:
                 continue
             res = json.loads(":".join(line.decode("utf-8").split(":")[1:]))
+            print(res)
             if res["is_end"]:
                 logging.info(f"result is done for user_input {user_input}")
             yield res["result"]
@@ -84,21 +85,22 @@ class ERNIEService(BAIDULLMService):
 
         response = requests.request(
             "POST", self.url, headers=self.headers, data=payload, stream=True)
+        print(payload)
 
         for line in response.iter_lines():
             if not line:
                 continue
+            print(line)
             res = json.loads(":".join(line.decode("utf-8").split(":")[1:]))
+            print(res)
             if res["is_end"]:
-                logging.info(f"result is done for")
-            yield res["result"]
+                logging.info(f"result is done")
+            yield res["result"], res["is_end"]
         
 
 
 if __name__ == '__main__':
     ernie = ERNIEService()
-    res = ernie.llm(user_input='你好')
-    print(res)
+    res = ernie.llm_stream(user_input='你好')
     for i in res:
-        print(i)
-        print()
+        print("1", i)

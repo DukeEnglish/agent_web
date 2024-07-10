@@ -90,7 +90,7 @@ class YIService(BAIDULLMService):
             res = json.loads(":".join(line.decode("utf-8").split(":")[1:]))
             if res["is_end"]:
                 logging.info(f"result is done for")
-            yield res["result"]
+            yield res["result"], res["is_end"]
 
 if __name__ == '__main__':
     yi = YIService()

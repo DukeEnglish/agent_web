@@ -60,9 +60,9 @@ class GLMService(LLMBaseService):
         for chunk in response:
             content = chunk.choices[0].delta.content
             if not content:
-                continue
+                yield "", True
 
-            yield content
+            yield content, False
 
 
 if __name__ == '__main__':

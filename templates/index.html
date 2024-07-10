@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Interface</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js?module"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
@@ -50,12 +51,12 @@
             </div>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script>
+    <script src="{{ url_for('static', filename='js/main_stream.js') }}"></script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             initEventSource();
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

@@ -51,9 +51,9 @@ class LocalService(LLMBaseService):
         for chunk in response:
             content = chunk.choices[0].delta.content
             if not content:
-                continue
+                yield "", True
 
-            yield content
+            yield content, False
 
     def chat_stream(self, dialogue =[
                 {

@@ -1,3 +1,7 @@
+// document.addEventListener('DOMContentLoaded', initEventSource);
+let eventSource = null;
+let currentMessageDiv; // 当前消息 div
+let fullMessage = ''; // 用于存储拼接的所有消息
 // static/js/main.js
 function handleKeyPress(event) {
     if (event.key === 'Enter') {
@@ -33,23 +37,7 @@ function adjustMessagePosition(messageDiv, isBot) {
     }
 }
 
-/* 新写的函数，用于添加消息到聊天历史 */
-function addMessageToChatHistory(message, isBot) {
-    const chatBox = document.getElementById('chat-box');
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('chat-bubble');
-    messageDiv.classList.add('bot-bubble');
-    if (isBot) {
-        messageDiv.classList.add('bot-bubble');
-    } else {
-        messageDiv.classList.add('user-bubble');
-    }
-    console.log("sdfasdf", message)
-    messageDiv.textContent = message;
-    chatBox.appendChild(messageDiv);
-    // 滚动到底部
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
+
 
 function sendMessage() {
     const userInput = document.getElementById('user-input').value;
@@ -57,8 +45,7 @@ function sendMessage() {
     const llmservice = document.getElementById('llmservice-select').value || 'ernie';
     const apikey = document.getElementById('apikey').value || null;
     const seckey = document.getElementById('seckey').value || null;
-    // const userId = document.getElementById('user_name').value || userId;
-    console.log("userId",userId)
+    const user_id = document.getElementById('user_name').value || userId;
 
     if (!userInput) {
         alert('Please enter a message.');
@@ -80,7 +67,7 @@ function sendMessage() {
         apikey: apikey,
         seckey: seckey,
         github: githubUrl,
-        userId: userId
+        userId: user_id
     };
 
     fetch('/chat', {
@@ -91,33 +78,16 @@ function sendMessage() {
         body: JSON.stringify(payload)
     })
     .then(response => { // 返回的是一个数组的时候 用这个来解析
-        response.json().then(data => {
-            console.log("test", typeof(data), data)
-            const chatBox = document.getElementById('chat-box');
-
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('bot-message');
-
-            data.forEach(item => {
-                // const messageDiv = document.createElement('div');
-                // messageDiv.classList.add('bot-message');    
-                // messageDiv.textContent += item.botMessage;
-                // const parsedMessage = marked.parse(item.botMessage);
-                const parsedMessage = item.botMessage
-                messageDiv.innerHTML += parsedMessage; // 使用innerHTML来添加HTML内容
-                // const chatBox = document.getElementById('chat-box');                
-            });
-            messageDiv.innerHTML = marked.parse(messageDiv.innerHTML)
-            chatBox.appendChild(messageDiv);
-            // 根据isBot的值调整消息位置
-            adjustMessagePosition(messageDiv, item.isBot);
-            // 滚动到底部
-            chatBox.scrollTop = chatBox.scrollHeight;
-        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        if (!eventSource) {
+            initEventSource();
+        }
+        return response.json();
     })
-
+    
     .catch(error => console.error('Error:', error));
-
     document.getElementById('user-input').value = '';
 }
 
@@ -127,14 +97,51 @@ function initEventSource() {
 
     eventSource.onmessage = function(event) {
         // 解析 JSON 数据
+        // console.log(event.data)
+        if (event){
         const messageObj = JSON.parse(event.data);
-        addMessageToChatHistory(messageObj.text, messageObj.isBot); 
-    };
+        // console.log(messageObj)
+        if (messageObj.isComplete != null) {
+        addMessageToChatHistory(messageObj.botMessage, true, messageObj.isComplete);}
+    }};
 
     eventSource.onerror = function(event) {
         console.error('EventSource failed:', event);
         eventSource.close();
     };
+}
+/* 新写的函数，用于添加消息到聊天历史 */
+function addMessageToChatHistory(message, isBot, isComplete) {
+    
+    const chatBox = document.getElementById('chat-box');
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('chat-bubble');
+    messageDiv.classList.add('bot-bubble');
+    if (isBot) {
+        messageDiv.classList.add('bot-bubble');
+    } else {
+        messageDiv.classList.add('user-bubble');
+    }
+    console.log("sdfasdf", message)
+    
+    if (fullMessage) {
+        chatBox.removeChild(chatBox.lastChild)
+    }
+    fullMessage += message; // 拼接所有消息
+        // const messageDiv = document.createElement('div');
+        // messageDiv.classList.add('bot-message');
+    messageDiv.innerHTML += marked.parse(fullMessage);
+    // fullMessage = ''
+    // chatBox.innerHTML = ''; // 清空之前的内容
+        // chatBox.appendChild(messageDiv);
+    console.log("123",message, isComplete)
+    if (isComplete) {
+        console.log("123",message)
+        fullMessage = ''
+    }
+    chatBox.appendChild(messageDiv);
+    // 滚动到底部
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 function clearChatHistory() {
